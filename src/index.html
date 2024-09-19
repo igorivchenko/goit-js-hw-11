@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
+    <form class="form">
+      <label>
+        <input
+          class="input"
+          type="text"
+          name="state"
+          placeholder="Search images..."
+        />
+      </label>
+      <button class="button">Search</button>
+    </form>
+    <span class="loader"></span>
+    <ul class="gallery"></ul>
+    <script type="module" src="./js/pixabay-api.js.js"></script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
