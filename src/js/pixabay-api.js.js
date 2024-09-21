@@ -3,35 +3,18 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { handleSuccess } from './render-functions.js';
+import { refs } from '../main.js';
 
 const BASE_URL = 'https://pixabay.com/api/?key=';
 const API_KEY = '46052576-a4ef4f0d52180e04b4399e04b';
 
-export const formField = document.querySelector('.form');
-
-export function handleSubmit(event) {
-  const gallery = document.querySelector('.gallery');
-  const loaderEl = document.querySelector('.loader');
-  const formElInputValue = formField.elements.state.value;
-  event.preventDefault();
-
-  gallery.innerHTML = '';
-
-  if (!formElInputValue) {
-    iziToast.error({
-      message: 'Please enter your request',
-      position: 'bottomRight',
-    });
-    return;
-  }
-
-  loaderEl.style.display = 'inline-block';
+export function fetchImages(value) {
   fetch(
-    `${BASE_URL}${API_KEY}&q=${formElInputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=30`
+    `${BASE_URL}${API_KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&per_page=30`
   )
     .then(response => response.json())
     .then(data => {
-      loaderEl.style.display = 'none';
+      refs.loader.style.display = 'none';
 
       if (data.hits.length === 0) {
         iziToast.error({
@@ -42,7 +25,7 @@ export function handleSubmit(event) {
         return;
       }
       const markup = handleSuccess(data.hits);
-      gallery.insertAdjacentHTML('beforeend', markup);
+      refs.gallery.insertAdjacentHTML('beforeend', markup);
 
       const library = new SimpleLightbox('.gallery a', {
         captionDelay: 300,
@@ -52,7 +35,7 @@ export function handleSubmit(event) {
       library.refresh();
     })
     .catch(error => {
-      loaderEl.style.display = 'none';
+      refs.loader.style.display = 'none';
       console.log(error);
     });
 }
