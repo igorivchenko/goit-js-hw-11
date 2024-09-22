@@ -12,7 +12,7 @@ export function handleSuccess(data) {
       }) => {
         return `<li class="gallery-item">
         <article class="card">
-    <a class="card-link" href="${largeImageURL}"><img class="card-image" src="${webformatURL}" alt="${tags}"/></a>        <div class="card-container">
+    <a class="card-link" href="${largeImageURL}"><img class="card-image" src="${webformatURL}" alt="${tags}" loading="lazy"/></a>        <div class="card-container">
           <div class="card-item">
             <p class="card-title">Likes</p>
             <p class="card-count">${likes}</p>
